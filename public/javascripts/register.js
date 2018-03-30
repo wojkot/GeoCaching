@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         },
                         type: "POST",
                         dataType: "json",
-
                         })
                         .then((ans) => {
                             if (ans.id !== null) {
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             else {
                                 $(_selectors.registerInfo).text("Cannot create account.")
                             }
-
                         })
                         .fail(function (err) {
                             console.log("Error. Cannot register.")
