@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Geo-caching</title>
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbkfbqDkb2CPSQDvgzmz37CojvvvSufTg"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../public/javascripts/safes.js"></script>
+</head>
+<body>
+    <div>
+        <header>
+            <h1>Geo Caching</h1>
+            <form action="./logout">
+                <button type="submit" class="btn btn-info login-btn" id="loginBtn">Login</button>
+            </form>
+        </header>
+        <nav>
+            <ul class="list-group" id="safesList">
+                <li class="list-group-item fist-item active">Safes <button type="button" id="prepareSafe" class="btn btn-success pull-right">Add safe</button></li>
+            </ul>
+        </nav>
+        <article >
+            <div id="mainContent" >
+                <div id="showContent"></div>
+                <div id="editContent"></div>
+                <div id="info"></div>
+            </div>
+        </article>
+    </div>
+</body>
+</html>

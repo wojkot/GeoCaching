@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/style.css" />
+</head>
+<body>
+    <header>
+        <h1>Geo Caching</h1>
+        <a href="./">
+            <button type="button" class="btn btn-info main-page-btn">Safes list</button>
+        </a>
+    </header>
+    <div class="login-form">
+        <form action="/login" method="post">
+            <h2 class="text-center">Log in</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Enter Username" id="loginName" name="username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Enter Password" id="loginPassword" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block " id="loginBtn" value="Login">Login</button>
+            </div>
+        </form>
+        <p class="text-center"><a href="./register" id="infoBtn">Register</a></p>
+    </div>
+</body>
+</html>
