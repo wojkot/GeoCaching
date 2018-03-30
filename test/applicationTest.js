@@ -1,7 +1,7 @@
 // Database
 const mongoose = require("mongoose");
 
-//Schemasff
+//Schemas
 const Users = require('../schemas/users');
 const Safes = require('../schemas/safes');
 const SafeDiscovers = require('../schemas/discovers');
