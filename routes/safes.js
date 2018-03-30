@@ -30,6 +30,7 @@ exports.loadSafes = async function loadSafes(req, res) {
 
 
 exports.saveSafe = async function saveSafe(req, res) {
+    
     try {
         const { safeId, safeName, safeDescription, safeLocalization, safeLattitude, safeLongitude } = req.body;
         let safe = {};
@@ -61,7 +62,6 @@ exports.saveSafe = async function saveSafe(req, res) {
 };
 
 
-
 exports.editSafe = function editSafe(req, res) {
     try {
         const { editSafeId } = req.query;
@@ -83,9 +83,7 @@ exports.editSafe = function editSafe(req, res) {
 
 
 exports.selectSafe = async function selectSafe(req, res) {
-
     try {
-
         const { selectedSafeId } = req.query;
         const loggedIn = (req.user === undefined) ? null : req.user;
         const safe = await Safes.findById(selectedSafeId) || new Safes();
