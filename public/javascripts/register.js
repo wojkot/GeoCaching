@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
 
         const _handlers = {
-
             onSignUp: function () {
                 const actualPassword = $(_selectors.setPassword).val();
 
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         type: "POST",
                         dataType: "json",
 
-                    })
+                        })
                         .then((ans) => {
                             if (ans.id !== null) {
                                 location.href = "/login"
@@ -51,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             console.log("Error. Cannot register.")
                         });
                 }
-
             }
         }
 
