@@ -49,14 +49,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
 
         const _handlers = {
-
             onDocumentReady: function () {
                 $.ajax({
                     url: '/load',
                     type: 'GET',
                     beforeSend: _handlers.displaySafeView()
-
-                })
+                    })
                     .then((ans) => {
                         let active = _handlers.checkIfUserIsActive(ans.loggedIn, ans.safes)
                         _handlers.appendSafesList(ans.safes)
@@ -93,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         },
                         type: "POST",
                         dataType: "json",
-                    })
+                        })
                         .then(function (ans) {
                             _handlers.updateSafesList(ans.id)
                             _handlers.displayAlert(_alerts.addSuccess);
@@ -138,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
             onRemoveSafeClick: function () {
-
                 $.ajax({
                     url: '/safe/remove',
                     data: JSON.stringify({
@@ -225,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
             onEditSafeClick: function (event) {
-
                 $.ajax({
                     url: '/safe/edit',
                     data: {
@@ -252,8 +248,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             onPrepareSafeClick: function () {
                 $.get("../../views/edit.html", function (data) {
                     $(_selectors.editContent).html(data);
-
-                }).then(() => {
+                    })
+                   .then(() => {
                     $(_selectors.info).hide();
                     $(_selectors.safeView).hide();
                     $(_selectors.safeModifyView).show();
@@ -302,7 +298,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (loggedIn !== null) {
                     $(_selectors.logUser).text('Logout').addClass('btn-basic').removeClass('btn-info');
                 }
-
                 return (loggedIn !== null && _handlers.checkFirstSafeOwner(loggedIn, safes))
             },
 
@@ -375,7 +370,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     $(_selectors.showContent).html(data);
                 });
             },
-
 
 
             updateSafesList: function (id) {
