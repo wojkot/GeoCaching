@@ -37,12 +37,12 @@ passport.deserializeUser(function (user, done) {
 
 passport.use(new LocalStrategy(usersFunctions.validateUser));
 
-mongoose.connect('mongodb://localhost/test16');
+mongoose.connect('mongodb://localhost/database');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 //Patches - uncomment only for testing purposes
-const addTestUser = require('./patches/patch_add_user');
-app.use(addTestUser.addUser)
+//const addTestUser = require('./patches/patch_add_user');
+//app.use(addTestUser.addUser)
 
 
 app.route('/load')
