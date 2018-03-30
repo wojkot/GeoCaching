@@ -1,5 +1,7 @@
 # GeoCaching
-Geocaching portal
+Geocaching portal allows you to create new safes and discover existing. Application alows also to edit end removeing existing safes by author.
+
+All safes are described by title, author, localization description and map with its position.
 
 ##  **Preconditions**
 ### 1. Clone repository
