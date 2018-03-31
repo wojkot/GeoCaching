@@ -48,7 +48,7 @@ This will start server on localhost:3000.
 | GET| /login       | Redirect to login page.      |
 | POST| /register| Register user   |
 | GET| /register| Redirect to register page.      |
-| GET| /logaout| Log off user.      |
+| GET| /logout| Log off user.      |
 
 ## User manual
 
