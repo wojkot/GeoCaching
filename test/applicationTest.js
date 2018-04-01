@@ -13,12 +13,13 @@ const chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 const should = chai.should();
 const server = require('../app');
-chai.use(chaiHttp);
-request = require("supertest");
-agent = request.agent(server);
+const request = require("supertest");
+const crypto = require('crypto');
+const agent = request.agent(server);
 
 
 chai.use(require('chai-passport-strategy'));
+chai.use(chaiHttp);
 
 describe('1.Remove existing safe - success', () => {
 
@@ -435,6 +436,9 @@ describe('8.Get all safes from database and take data of first to display it the
 describe('9.Test user logging - positive', () => {
 
     before(function (done) {
+
+        const hashPassword = crypto.createHmac('sha256', '123').digest('hex');
+
         //Remove user for tests if it already exists
         Users.find({ _id: '5ab3e66975786f2e0851f72d' }).remove().exec();
 
@@ -442,12 +446,14 @@ describe('9.Test user logging - positive', () => {
         let user = new Users({
             _id: '5ab3e66975786f2e0851f72d',
             name: 'user1',
-            password: "123"
+            password: hashPassword
         });
         user.save(done)
     });
 
     describe('Login test', function () {
+        const userHashPassword = crypto.createHmac('sha256', '123').digest('hex');
+        console.log(userHashPassword)
         it('should redirect to /', function (done) {
             agent
                 .post('/login')
@@ -468,6 +474,8 @@ describe('9.Test user logging - positive', () => {
 
 describe('10.Test user logging - negative', () => {
 
+    const hashPassword = crypto.createHmac('sha256', '123').digest('hex');
+
     before(function (done) {
         //Remove user if exists
         Users.find({ name: 'non_exist' }).remove(done);
@@ -478,7 +486,7 @@ describe('10.Test user logging - negative', () => {
         it('should redirect to /', function (done) {
             agent
                 .post('/login')
-                .send({ 'username': 'non_exist', 'password': '123' })
+                .send({ 'username': 'non_exist', 'password': hashPassword })
                 .expect('Location', './login')
                 .end(done)
         })
