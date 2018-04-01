@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const Users = require('../schemas/users');
 const path = require('path');
@@ -8,7 +9,8 @@ const passport = require('passport')
 
 exports.validateUser = function validateUser(username, password, done) {
     try {
-        const result = Users.findOne({ 'name': username, 'password': password }, function (err, user) {
+        const hashPassword = crypto.createHmac('sha256', password).digest('hex');
+        const result = Users.findOne({ 'name': username, 'password': hashPassword }, function (err, user) {
             return done(null, user);
         });
     }
@@ -20,7 +22,8 @@ exports.validateUser = function validateUser(username, password, done) {
 exports.registerUser = async function registerUser(req, res) {
     try {
         const { userName, userEmail, userPassword } = req.body;
-        const user = new Users({ name: userName, password: userPassword, email: userEmail });
+        const hashPassword = crypto.createHmac('sha256', userPassword).digest('hex');
+        const user = new Users({ name: userName, password: hashPassword, email: userEmail });
         await user.save()
 
         res.json({
