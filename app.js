@@ -31,7 +31,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(usersFunctions.validateUser));
 
 // Database connection
-mongoose.connect('mongodb://localhost/test16');
+mongoose.connect('mongodb://localhost/testDB');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 //Patches - uncomment only for testing purposes
