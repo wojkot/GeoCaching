@@ -76,7 +76,6 @@ describe('2.Try to remove no existing safe - fail', () => {
                 .send(safe)
                 .end((err, res) => {
                     res.should.have.status(200);
-
                     res.body.should.be.eql({ status: 1, operations: 0 });
                     done();
                 });
@@ -89,9 +88,9 @@ describe('3.Add safe', () => {
 
     it('it should add new safe to database', (done) => {
 
-        let safe = { safeId: null, safeName: 'testSafe', safeDescription: 'testDescription', safeLocalization: 'testLocalization', safeLattitude: '5', safeLongitude: '5' };
+        let safe = { safeName: 'testSafe', safeDescription: 'testDescription', safeLocalization: 'testLocalization', safeLattitude: '5', safeLongitude: '5' };
         chai.request(server)
-            .post('/safe/save')
+            .post('/safe/add')
             .send(safe)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -108,7 +107,7 @@ describe('3.Add safe', () => {
 });
 
 
-describe('4.Update existing safe safe', () => {
+describe('4.Update existing safe', () => {
 
     before(function (done) {
         //Remove safe for tests if it already exists
@@ -134,7 +133,7 @@ describe('4.Update existing safe safe', () => {
         it('it should update existing safe in database', (done) => {
             let safe = { safeId: '5ab58d002d237847c8e1b129', safeName: 'testSafeEdit', safeDescription: 'test', safeLocalization: 'test', safeLattitude: '5', safeLongitude: '5' };
             chai.request(server)
-                .post('/safe/save')
+                .put('/safe/save')
                 .send(safe)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -155,7 +154,33 @@ describe('4.Update existing safe safe', () => {
 });
 
 
-describe('5.Edit existing safe safe', () => {
+describe('5.Try to update non existing safe ', () => {
+
+    before(function (done) {
+        //Remove safe for tests if it already exists
+        Safes.find({ _id: '5ab58d002d237847c8e1b129' }).remove().exec(done);
+    });
+
+
+    describe('Update safe', function () {
+        it('it should return server error because safe not exists in database', (done) => {
+            let safe = { safeId: '5ab58d002d237847c8e1b129', safeName: 'testSafeEdit', safeDescription: 'test', safeLocalization: 'test', safeLattitude: '5', safeLongitude: '5' };
+            chai.request(server)
+                .put('/safe/save')
+                .send(safe)
+                .end((err, res) => {
+                    res.should.have.status(500);
+                    done();
+                });
+
+        });
+    });
+
+
+});
+
+
+describe('6.Edit existing safe safe', () => {
 
     before(function (done) {
         //Remove safe for tests if it already exists
@@ -204,23 +229,21 @@ describe('5.Edit existing safe safe', () => {
 });
 
 
-describe('6.Try to edit no existing safe - fail', () => {
+describe('7.Try to edit no existing safe - fail', () => {
 
-    it('it should return empty safe with no data except id', (done) => {
-        let safe = { editSafeId: '5ab58d002d237847c8e1b1w0' };
+    before(function (done) {
+        //Remove safe for tests if it already exists
+        Safes.find({ _id: '5ab58d002d237847c8e1b129' }).remove().exec(done);
+    });
+
+
+    it('it should return server error', (done) => {
+        let safe = { editSafeId: '5ab58d002d237847c8e1b129' };
         chai.request(server)
             .get('/safe/edit')
             .query(safe)
             .end((err, res) => {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.safe.should.have.property('_id');
-                res.body.safe.name.should.equal('');
-                res.body.safe.description.should.equal('');
-                res.body.safe.localization.should.equal('');
-                res.body.safe.lattitude.should.equal(0);
-                res.body.safe.longitude.should.equal(0);
-                res.body.safe.owner.should.equal('');
+                res.should.have.status(500);
                 done();
             });
     });
@@ -229,7 +252,7 @@ describe('6.Try to edit no existing safe - fail', () => {
 
 
 
-describe('7.Select safe from list and get all its data', () => {
+describe('8.Select safe from list and get all its data', () => {
 
     before(function (done) {
         //Remove safe for tests if it already exists
@@ -323,7 +346,7 @@ describe('7.Select safe from list and get all its data', () => {
     });
 });
 
-describe('8.Get all safes from database and take data of first to display it then', () => {
+describe('9.Get all safes from database and take data of first to display it then', () => {
 
     before(function (done) {
          //Remove safe for tests if it already exists
@@ -433,15 +456,15 @@ describe('8.Get all safes from database and take data of first to display it the
 
 
 
-describe('9.Test user logging - positive', () => {
+describe('10.Test user logging - positive', () => {
 
     before(function (done) {
-
-        const hashPassword = crypto.createHmac('sha256', '123').digest('hex');
-
         //Remove user for tests if it already exists
-        Users.find({ _id: '5ab3e66975786f2e0851f72d' }).remove().exec();
+        Users.find({ _id: '5ab3e66975786f2e0851f72d' }).remove().exec(done);
+    });
 
+    before(function (done) {
+        const hashPassword = crypto.createHmac('sha256', '123').digest('hex');
         //Create new user
         let user = new Users({
             _id: '5ab3e66975786f2e0851f72d',
@@ -472,7 +495,7 @@ describe('9.Test user logging - positive', () => {
 });
 
 
-describe('10.Test user logging - negative', () => {
+describe('11.Test user logging - negative', () => {
 
     const hashPassword = crypto.createHmac('sha256', '123').digest('hex');
 
@@ -500,7 +523,7 @@ describe('10.Test user logging - negative', () => {
 
 });
 
-describe('11. Add discovery', () => {
+describe('12. Add discovery', () => {
 
     before(function (done) {
         //Remove safe for tests if it already exists
@@ -540,7 +563,7 @@ describe('11. Add discovery', () => {
 });
 
 
-describe('12.Remove discovery', () => {
+describe('13.Remove discovery', () => {
 
     before(function (done) {
         //Remove safe for tests if it already exists
