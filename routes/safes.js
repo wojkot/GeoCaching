@@ -25,30 +25,19 @@ exports.loadSafes = async function loadSafes(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
 
-exports.saveSafe = async function saveSafe(req, res) {
-    
+exports.addSafe = async function saveSafe(req, res) {
     try {
-        const { safeId, safeName, safeDescription, safeLocalization, safeLattitude, safeLongitude } = req.body;
+        const { safeName, safeDescription, safeLocalization, safeLattitude, safeLongitude } = req.body;
         let safe = {};
 
-        if (!mongoose.Types.ObjectId.isValid(safeId)) {
-            safe = new Safes({
-                name: safeName, description: safeDescription, owner: req.user._id,
-                localization: safeLocalization, lattitude: safeLattitude, longitude: safeLongitude
-            });
-        }
-        else {
-            safe = await Safes.findById(safeId);
-            safe.name = safeName;
-            safe.description = safeDescription;
-            safe.localization = safeLocalization;
-            safe.lattitude = safeLattitude;
-            safe.longitude = safeLongitude;
-        }
+        safe = new Safes({
+            name: safeName, description: safeDescription, owner: req.user._id,
+            localization: safeLocalization, lattitude: safeLattitude, longitude: safeLongitude });
 
         await safe.save();
 
@@ -58,6 +47,32 @@ exports.saveSafe = async function saveSafe(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
+    }
+};
+
+
+exports.saveSafe = async function saveSafe(req, res) {
+    try {
+        const { safeId, safeName, safeDescription, safeLocalization, safeLattitude, safeLongitude } = req.body;
+
+        safe = await Safes.findById(safeId);
+        if (safe === null) { throw "Cannot update safe!";}
+        safe.name = safeName;
+        safe.description = safeDescription;
+        safe.localization = safeLocalization;
+        safe.lattitude = safeLattitude;
+        safe.longitude = safeLongitude;
+
+        await safe.save();
+
+        res.json({
+            id: safe._id,
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
@@ -78,12 +93,15 @@ exports.editSafe = function editSafe(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
 
 exports.selectSafe = async function selectSafe(req, res) {
+
     try {
+
         const { selectedSafeId } = req.query;
         const loggedIn = (req.user === undefined) ? null : req.user;
         const safe = await Safes.findById(selectedSafeId) || new Safes();
@@ -99,6 +117,7 @@ exports.selectSafe = async function selectSafe(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
@@ -114,5 +133,6 @@ exports.removeSafe = async function removeSafe(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
