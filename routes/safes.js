@@ -37,7 +37,8 @@ exports.addSafe = async function saveSafe(req, res) {
 
         safe = new Safes({
             name: safeName, description: safeDescription, owner: req.user._id,
-            localization: safeLocalization, lattitude: safeLattitude, longitude: safeLongitude });
+            localization: safeLocalization, lattitude: safeLattitude, longitude: safeLongitude
+        });
 
         await safe.save();
 
@@ -56,8 +57,11 @@ exports.saveSafe = async function saveSafe(req, res) {
     try {
         const { safeId, safeName, safeDescription, safeLocalization, safeLattitude, safeLongitude } = req.body;
 
-        safe = await Safes.findById(safeId);
-        if (safe === null) { throw "Cannot update safe!";}
+        let safe = await Safes.findById(safeId);
+        if (safe === null) {
+            throw "Cannot update safe!";
+        }
+
         safe.name = safeName;
         safe.description = safeDescription;
         safe.localization = safeLocalization;
@@ -77,19 +81,20 @@ exports.saveSafe = async function saveSafe(req, res) {
 };
 
 
-exports.editSafe = function editSafe(req, res) {
+exports.editSafe = async function editSafe(req, res) {
+   
     try {
         const { editSafeId } = req.query;
-        console.log(editSafeId)
-        Safes.findById(editSafeId, 'name description localization lattitude longitude', (err, safe) => {
-            if (err) {
-                safe = new Safes({ name: '', description: '', owner: '', localization: '', lattitude: 0, longitude: 0 });
-            }
+        let safe = await Safes.findById(editSafeId, 'name description localization lattitude longitude')
 
-            res.json({
-                safe: safe,
-            });
+        if (safe === null) {
+            throw "Cannot find safe!";
+        }
+
+        res.json({
+            safe: safe,
         });
+
     }
     catch (err) {
         console.log(err);
