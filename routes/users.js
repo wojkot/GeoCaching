@@ -16,6 +16,7 @@ exports.validateUser = function validateUser(username, password, done) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 }
 
@@ -32,6 +33,7 @@ exports.registerUser = async function registerUser(req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
@@ -41,6 +43,7 @@ exports.register = function (req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 }
 
@@ -56,6 +59,7 @@ exports.redirector = function (req, res) {
     }
     catch (err) {
         console.log(err);
+        res.status(500).send('Something broke!')
     }
 };
 
