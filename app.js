@@ -37,12 +37,12 @@ passport.deserializeUser(function (user, done) {
 
 passport.use(new LocalStrategy(usersFunctions.validateUser));
 
-mongoose.connect('mongodb://localhost/database');
+mongoose.connect('mongodb://localhost/test16');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 //Patches - uncomment only for testing purposes
-//const addTestUser = require('./patches/patch_add_user');
-//app.use(addTestUser.addUser)
+ //const addTestUser = require('./patches/patch_add_user');
+ //app.use(addTestUser.addUser)
 
 
 app.route('/load')
@@ -56,8 +56,11 @@ app.route('/login')
     .post(usersFunctions.authenticator)
     .get(usersFunctions.redirector)
 
+app.route('/safe/add')
+    .post(safesFunctions.addSafe)
+
 app.route('/safe/save')
-    .post(safesFunctions.saveSafe)
+    .put(safesFunctions.saveSafe)
 
 app.route('/safe/markdiscovered')
     .post(discoversFunctions.markSafeDiscovered)
@@ -80,7 +83,3 @@ app.listen('3000', () => {
 
 
 module.exports = app
-
-
-
-
