@@ -27,22 +27,16 @@ app.use(session({ secret: 'code' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-    done(null, user);
-});
-
+// Passport - user authentication
 passport.use(new LocalStrategy(usersFunctions.validateUser));
 
+// Database connection
 mongoose.connect('mongodb://localhost/test16');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 //Patches - uncomment only for testing purposes
- //const addTestUser = require('./patches/patch_add_user');
- //app.use(addTestUser.addUser)
+//const addTestUser = require('./patches/patch_add_user');
+//app.use(addTestUser.addUser)
 
 
 app.route('/load')
