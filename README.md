@@ -56,7 +56,7 @@ This will start server on localhost:3000.
 ### Main page - safes list
 Main page allows to browse all safes with its description and localization. Unlogged user has no permission to create new safes and mark existing as discovered. 
 To log in, click button "Login" on top right corner, it redirect you to login page. If you have no account, go to registration page and then log in.
-As logged user you can add new safes, editing and removing it. You can also mark any safe as discovered, which will write you to the list of discovers (you can also remove yourself from this list, unchecking by 'Discovered' checkbox).
+As logged user you can add new safes, editing and removing it. You can also mark any safe as discovered, which will write you to the list of discovers (you can also remove yourself from this list, by unchecking 'Discovered' checkbox).
 
 ### Create your first safe
 1. Log in
