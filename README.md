@@ -34,7 +34,8 @@ This will start server on localhost:3000.
 | Method       | URL            | Description   |
 | :---         |     :---       | :---          |
 | GET          | /load          | Load all safes from database with name and description. For first safe read detailed data to display it.    |
-| POST     | /safe/save       | Save data of created/edited safe.      |
+| POST     | /safe/add       | Save data of added safe.      |
+| PUT     | /safe/save       | Save data of edited safe.      |
 | POST     | /safe/markdiscovered       | Mark safe as discovered by actually logged user.      |
 | GET| /safe/edit       | Get data of edited safe from database.      |
 | GET| /safe/select       | Get all data of actually selected safe.      |
