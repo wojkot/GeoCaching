@@ -6,6 +6,13 @@ const passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
 
 
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
 
 exports.validateUser = function validateUser(username, password, done) {
     try {
